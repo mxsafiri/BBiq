@@ -2,7 +2,7 @@ import { getDb } from './client';
 import { score, type RoadType } from '@/lib/scoring';
 import { NEARBY_PLACES, PEAK_HOURS } from '@/lib/mock-data';
 import { fetchTrafficData } from '@/lib/google-traffic';
-import { fetchNearbyPlaces } from '@/lib/google-places';
+import { fetchNearbyPlaces } from '@/lib/foursquare-places';
 
 // ── Types ────────────────────────────────────────────────────
 
