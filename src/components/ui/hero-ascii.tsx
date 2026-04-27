@@ -1,96 +1,28 @@
 'use client';
 
-import { useEffect } from 'react';
 import Link from 'next/link';
 
 export default function HeroAscii() {
-  useEffect(() => {
-    const embedScript = document.createElement('script');
-    embedScript.type = 'text/javascript';
-    embedScript.textContent = `
-      !function(){
-        if(!window.UnicornStudio){
-          window.UnicornStudio={isInitialized:!1};
-          var i=document.createElement("script");
-          i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.33/dist/unicornStudio.umd.js";
-          i.onload=function(){
-            window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)
-          };
-          (document.head || document.body).appendChild(i)
-        }
-      }();
-    `;
-    document.head.appendChild(embedScript);
-
-    const style = document.createElement('style');
-    style.textContent = `
-      [data-us-project] {
-        position: relative !important;
-        overflow: hidden !important;
-      }
-      [data-us-project] canvas {
-        clip-path: inset(0 0 10% 0) !important;
-      }
-      [data-us-project] * {
-        pointer-events: none !important;
-      }
-      [data-us-project] a[href*="unicorn"],
-      [data-us-project] button[title*="unicorn"],
-      [data-us-project] div[title*="Made with"],
-      [data-us-project] .unicorn-brand,
-      [data-us-project] [class*="brand"],
-      [data-us-project] [class*="credit"],
-      [data-us-project] [class*="watermark"] {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        position: absolute !important;
-        left: -9999px !important;
-        top: -9999px !important;
-      }
-    `;
-    document.head.appendChild(style);
-
-    const hideBranding = () => {
-      const projectDiv = document.querySelector('[data-us-project]');
-      if (projectDiv) {
-        projectDiv.querySelectorAll('*').forEach(el => {
-          const text = (el.textContent || '').toLowerCase();
-          if (text.includes('made with') || text.includes('unicorn')) {
-            el.remove();
-          }
-        });
-      }
-    };
-
-    hideBranding();
-    const interval = setInterval(hideBranding, 100);
-    setTimeout(hideBranding, 1000);
-    setTimeout(hideBranding, 3000);
-    setTimeout(hideBranding, 5000);
-
-    return () => {
-      clearInterval(interval);
-      document.head.removeChild(embedScript);
-      document.head.removeChild(style);
-    };
-  }, []);
-
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#0a1628]">
-      {/* Animated background — hidden on mobile */}
-      <div className="absolute inset-0 w-full h-full hidden lg:block">
-        <div
-          data-us-project="whwOGlfJ5Rz2rHaEUgHl"
-          style={{ width: '100%', height: '100%', minHeight: '100vh' }}
-        />
-      </div>
+      {/* Looping video background */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        poster=""
+        className="absolute inset-0 w-full h-full object-cover z-0"
+      >
+        <source src="/hero-bg.mp4" type="video/mp4" />
+      </video>
 
-      {/* Blue-tinted overlay to shift animation towards brand palette */}
-      <div className="absolute inset-0 hidden lg:block bg-blue-900/30 mix-blend-multiply pointer-events-none z-[1]" />
-
-      {/* Mobile stars background */}
-      <div className="absolute inset-0 w-full h-full lg:hidden stars-bg" />
+      {/* Brand-blue blend overlays — multiply to tint, plus radial vignette and dark gradient for legibility */}
+      <div className="absolute inset-0 z-[1] pointer-events-none bg-blue-900/50 mix-blend-multiply" />
+      <div className="absolute inset-0 z-[1] pointer-events-none bg-gradient-to-r from-[#0a1628] via-[#0a1628]/60 to-transparent" />
+      <div className="absolute inset-0 z-[1] pointer-events-none bg-gradient-to-t from-[#0a1628] via-transparent to-[#0a1628]/40" />
+      <div className="absolute inset-0 z-[1] pointer-events-none vignette" />
 
       {/* Top header */}
       <div className="absolute top-0 left-0 right-0 z-20 border-b border-blue-400/30">
@@ -219,19 +151,8 @@ export default function HeroAscii() {
           background-size: 3px 3px;
         }
 
-        .stars-bg {
-          background-image:
-            radial-gradient(1px 1px at 20% 30%, #bfdbfe, transparent),
-            radial-gradient(1px 1px at 60% 70%, #93c5fd, transparent),
-            radial-gradient(1px 1px at 50% 50%, #bfdbfe, transparent),
-            radial-gradient(1px 1px at 80% 10%, #60a5fa, transparent),
-            radial-gradient(1px 1px at 90% 60%, #93c5fd, transparent),
-            radial-gradient(1px 1px at 33% 80%, #bfdbfe, transparent),
-            radial-gradient(1px 1px at 15% 60%, #60a5fa, transparent),
-            radial-gradient(1px 1px at 70% 40%, #93c5fd, transparent);
-          background-size: 200% 200%, 180% 180%, 250% 250%, 220% 220%, 190% 190%, 240% 240%, 210% 210%, 230% 230%;
-          background-position: 0% 0%, 40% 40%, 60% 60%, 20% 20%, 80% 80%, 30% 30%, 70% 70%, 50% 50%;
-          opacity: 0.35;
+        .vignette {
+          background: radial-gradient(ellipse at center, transparent 40%, rgba(10, 22, 40, 0.7) 100%);
         }
       `}</style>
     </main>
