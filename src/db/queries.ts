@@ -1,4 +1,4 @@
-import { sql } from './client';
+import { getDb } from './client';
 import { score, type RoadType } from '@/lib/scoring';
 import { NEARBY_PLACES, PEAK_HOURS } from '@/lib/mock-data';
 import { fetchTrafficData } from '@/lib/google-traffic';
@@ -68,6 +68,8 @@ const AVG_SPEED: Record<string, number> = {
 
 export async function createAnalysis(input: CreateAnalysisInput) {
   const { name, address, lat, lng, roadType, size, heightM, angle } = input;
+
+  const sql = getDb();
 
   // 1. Upsert location (match by lat/lng rounded to 4 decimal places)
   const locRows = await sql`
@@ -176,6 +178,7 @@ export async function createAnalysis(input: CreateAnalysisInput) {
 }
 
 export async function getAnalyses(): Promise<AnalysisSummary[]> {
+  const sql = getDb();
   const rows = await sql`
     SELECT
       a.id,
@@ -214,6 +217,7 @@ export async function getAnalyses(): Promise<AnalysisSummary[]> {
 }
 
 export async function getAnalysisById(id: string): Promise<AnalysisDetail | null> {
+  const sql = getDb();
   const rows = await sql`
     SELECT
       a.*,
