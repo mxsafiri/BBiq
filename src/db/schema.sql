@@ -85,6 +85,46 @@ CREATE TABLE IF NOT EXISTS pricing_history (
   recorded_at         TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+-- ── NextAuth tables (camelCase identifiers required by @auth/pg-adapter) ──
+CREATE TABLE IF NOT EXISTS users (
+  id              TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
+  name            TEXT,
+  email           TEXT UNIQUE,
+  "emailVerified" TIMESTAMPTZ,
+  image           TEXT,
+  created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS accounts (
+  id                  TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
+  "userId"            TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  type                TEXT NOT NULL,
+  provider            TEXT NOT NULL,
+  "providerAccountId" TEXT NOT NULL,
+  refresh_token       TEXT,
+  access_token        TEXT,
+  expires_at          BIGINT,
+  token_type          TEXT,
+  scope               TEXT,
+  id_token            TEXT,
+  session_state       TEXT,
+  UNIQUE (provider, "providerAccountId")
+);
+
+CREATE TABLE IF NOT EXISTS sessions (
+  id             TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
+  "sessionToken" TEXT NOT NULL UNIQUE,
+  "userId"       TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  expires        TIMESTAMPTZ NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS verification_token (
+  identifier TEXT NOT NULL,
+  token      TEXT NOT NULL,
+  expires    TIMESTAMPTZ NOT NULL,
+  PRIMARY KEY (identifier, token)
+);
+
 -- ── Indexes ──────────────────────────────────────────────────
 CREATE INDEX IF NOT EXISTS idx_billboards_location ON billboards(location_id);
 CREATE INDEX IF NOT EXISTS idx_analyses_billboard  ON analyses(billboard_id);
