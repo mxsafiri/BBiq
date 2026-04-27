@@ -1,58 +1,84 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a1628;
-  --foreground: #e2e8f0;
-  --card: #0d1f3c;
-  --card-foreground: #e2e8f0;
-  --border: rgba(59, 130, 246, 0.2);
-  --input: #0d1f3c;
-  --primary: #3b82f6;
-  --primary-foreground: #ffffff;
-  --secondary: #1e3a5f;
-  --secondary-foreground: #93c5fd;
-  --muted: #1e3a5f;
-  --muted-foreground: #93c5fd;
-  --accent: #1e40af;
-  --accent-foreground: #bfdbfe;
-  --ring: rgba(59, 130, 246, 0.5);
+  /* Surfaces */
+  --background:    #0B1E36;
+  --surface:       #102A4C;
+  --surface-2:     #163566;
+  --border:        #1F3B66;
+  --border-soft:   rgba(31, 59, 102, 0.5);
+
+  /* Brand */
+  --primary:       #3B82F6;
+  --primary-soft:  #60A5FA;
+  --primary-glow:  #93C5FD;
+
+  /* Accents */
+  --gold:          #F4A261;
+  --gold-soft:     #F7B267;
+
+  /* Status */
+  --success:       #2A9D8F;
+
+  /* Text */
+  --fg:        #E5E7EB;
+  --fg-muted:  #94A3B8;
+  --fg-dim:    #64748B;
+
   --radius: 0.5rem;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background:      var(--background);
+  --color-surface:         var(--surface);
+  --color-surface-2:       var(--surface-2);
+  --color-border:          var(--border);
+  --color-border-soft:     var(--border-soft);
+
+  --color-primary:         var(--primary);
+  --color-primary-soft:    var(--primary-soft);
+  --color-primary-glow:    var(--primary-glow);
+
+  --color-gold:            var(--gold);
+  --color-gold-soft:       var(--gold-soft);
+
+  --color-success:         var(--success);
+
+  --color-fg:              var(--fg);
+  --color-fg-muted:        var(--fg-muted);
+  --color-fg-dim:          var(--fg-dim);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
+  color: var(--fg);
   font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Leaflet overrides to match dark theme */
 .leaflet-container {
-  background: #0a1628 !important;
+  background: var(--background) !important;
   font-family: inherit !important;
 }
 .leaflet-tile-pane {
-  filter: brightness(0.6) saturate(0.7) hue-rotate(200deg);
+  filter: brightness(0.55) saturate(0.7) hue-rotate(200deg);
 }
 .leaflet-control-attribution {
-  background: rgba(10, 22, 40, 0.8) !important;
-  color: rgba(147, 197, 253, 0.5) !important;
+  background: rgba(11, 30, 54, 0.85) !important;
+  color: var(--fg-dim) !important;
   font-size: 9px !important;
 }
 .leaflet-control-zoom a {
-  background: #0d1f3c !important;
-  color: #60a5fa !important;
-  border-color: rgba(59, 130, 246, 0.3) !important;
+  background: var(--surface) !important;
+  color: var(--primary-soft) !important;
+  border-color: var(--border) !important;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: #0a1628; }
-::-webkit-scrollbar-thumb { background: rgba(59, 130, 246, 0.3); border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(59, 130, 246, 0.6); }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--primary-soft); }

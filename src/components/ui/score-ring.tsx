@@ -45,7 +45,7 @@ export function ScoreRing({ score, label, size = 80 }: ScoreRingProps) {
       >
         {pct}
       </div>
-      <span className="text-[10px] font-mono text-blue-300/70 uppercase tracking-wider">{label}</span>
+      <span className="text-[10px] font-mono text-fg-muted uppercase tracking-wider">{label}</span>
     </div>
   );
 }

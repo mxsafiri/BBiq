@@ -13,39 +13,39 @@ export default async function LoginPage({
   if (session?.user) redirect(callbackUrl ?? '/dashboard');
 
   return (
-    <main className="min-h-screen bg-[#0a1628] flex items-center justify-center px-4">
+    <main className="min-h-screen bg-background flex items-center justify-center px-4">
       {/* Corner accents */}
-      <div className="absolute top-0 left-0 w-10 h-10 border-t-2 border-l-2 border-blue-400/30" />
-      <div className="absolute top-0 right-0 w-10 h-10 border-t-2 border-r-2 border-blue-400/30" />
-      <div className="absolute bottom-0 left-0 w-10 h-10 border-b-2 border-l-2 border-blue-400/30" />
-      <div className="absolute bottom-0 right-0 w-10 h-10 border-b-2 border-r-2 border-blue-400/30" />
+      <div className="absolute top-0 left-0 w-10 h-10 border-t-2 border-l-2 border-primary-soft/30" />
+      <div className="absolute top-0 right-0 w-10 h-10 border-t-2 border-r-2 border-primary-soft/30" />
+      <div className="absolute bottom-0 left-0 w-10 h-10 border-b-2 border-l-2 border-primary-soft/30" />
+      <div className="absolute bottom-0 right-0 w-10 h-10 border-b-2 border-r-2 border-primary-soft/30" />
 
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 bg-blue-600 rounded flex items-center justify-center">
+            <div className="w-10 h-10 bg-primary rounded flex items-center justify-center">
               <span className="text-white font-bold text-lg font-mono">B</span>
             </div>
             <div className="text-left">
-              <div className="text-white font-bold text-xl font-mono tracking-widest">
-                BILLBOARD<span className="text-blue-400">IQ</span>
+              <div className="text-fg font-bold text-xl font-mono tracking-widest">
+                BILLBOARD<span className="text-primary-soft">IQ</span>
               </div>
-              <div className="text-blue-400/50 text-[10px] font-mono tracking-widest">INTELLIGENCE PLATFORM</div>
+              <div className="text-fg-dim text-[10px] font-mono tracking-widest">INTELLIGENCE PLATFORM</div>
             </div>
           </div>
-          <div className="flex items-center gap-2 justify-center opacity-50 mb-1">
-            <div className="flex-1 h-px bg-blue-400/40" />
-            <span className="text-[9px] font-mono text-blue-300 tracking-widest">SECURE ACCESS</span>
-            <div className="flex-1 h-px bg-blue-400/40" />
+          <div className="flex items-center gap-2 justify-center opacity-60 mb-1">
+            <div className="flex-1 h-px bg-border" />
+            <span className="text-[9px] font-mono text-fg-muted tracking-widest">SECURE ACCESS</span>
+            <div className="flex-1 h-px bg-border" />
           </div>
         </div>
 
         {/* Card */}
-        <div className="bg-[#0d1f3c]/80 border border-blue-900/40 p-6 space-y-5">
+        <div className="bg-surface/80 border border-border p-6 space-y-5">
           <div>
-            <h1 className="text-sm font-mono font-bold text-white">Sign in to your account</h1>
-            <p className="text-[10px] font-mono text-blue-300/50 mt-1">
+            <h1 className="text-sm font-mono font-bold text-fg">Sign in to your account</h1>
+            <p className="text-[10px] font-mono text-fg-muted mt-1">
               Access your billboard intelligence dashboard.
             </p>
           </div>
@@ -77,20 +77,20 @@ export default async function LoginPage({
             </button>
           </form>
 
-          <p className="text-[9px] font-mono text-blue-300/30 text-center leading-relaxed">
+          <p className="text-[9px] font-mono text-fg-dim text-center leading-relaxed">
             By signing in you agree to our terms of service.<br />
             Your data is stored securely in Neon PostgreSQL.
           </p>
         </div>
 
         {/* Bottom metadata */}
-        <div className="flex items-center justify-center gap-3 mt-4 text-[8px] font-mono text-blue-400/30">
+        <div className="flex items-center justify-center gap-3 mt-4 text-[8px] font-mono text-fg-dim">
           <span>TZ MARKET</span>
           <span>·</span>
           <span>V1.0.0</span>
           <span>·</span>
           <div className="flex items-center gap-1">
-            <div className="w-1 h-1 rounded-full bg-green-400 animate-pulse" />
+            <div className="w-1 h-1 rounded-full bg-success animate-pulse" />
             <span>ONLINE</span>
           </div>
         </div>

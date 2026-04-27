@@ -64,13 +64,13 @@ export default function AnalyzePage() {
     <div className="space-y-4 md:space-y-5">
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <div className="w-4 h-px bg-blue-400" />
-          <span className="text-[10px] font-mono text-blue-400/60 uppercase tracking-widest">New Analysis</span>
+          <div className="w-4 h-px bg-primary-soft" />
+          <span className="text-[10px] font-mono text-fg-muted uppercase tracking-widest">New Analysis</span>
         </div>
         <h1 className="text-xl font-bold font-mono text-white">
-          LOCATION <span className="text-blue-400">ANALYSIS</span>
+          LOCATION <span className="text-primary-soft">ANALYSIS</span>
         </h1>
-        <p className="text-xs font-mono text-blue-300/50 mt-1">
+        <p className="text-xs font-mono text-fg-muted mt-1">
           Click the map to place your billboard or fill the form below.
         </p>
       </div>
@@ -79,10 +79,10 @@ export default function AnalyzePage() {
 
         {/* Map */}
         <div className="space-y-3">
-          <div className="border border-blue-900/40 bg-[#060f1e] overflow-hidden" style={{ height: 320 }}>
-            <div className="h-8 bg-[#060f1e] border-b border-blue-900/40 flex items-center px-3 gap-2 shrink-0">
-              <div className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
-              <span className="text-[9px] font-mono text-blue-300/50 uppercase tracking-widest">OpenStreetMap · Click to Place</span>
+          <div className="border border-border bg-[#060f1e] overflow-hidden" style={{ height: 320 }}>
+            <div className="h-8 bg-[#060f1e] border-b border-border flex items-center px-3 gap-2 shrink-0">
+              <div className="w-1.5 h-1.5 rounded-full bg-primary-soft animate-pulse" />
+              <span className="text-[9px] font-mono text-fg-muted uppercase tracking-widest">OpenStreetMap · Click to Place</span>
             </div>
             <div style={{ height: 288 }}>
               <MapDisplay
@@ -99,12 +99,12 @@ export default function AnalyzePage() {
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <div className="border border-blue-900/40 bg-[#0d1f3c]/60 px-3 py-2">
-              <div className="text-[9px] font-mono text-blue-400/50 uppercase tracking-widest mb-1">Latitude</div>
+            <div className="border border-border bg-surface/60 px-3 py-2">
+              <div className="text-[9px] font-mono text-fg-muted uppercase tracking-widest mb-1">Latitude</div>
               <div className="text-sm font-mono text-white">{lat.toFixed(6)}°</div>
             </div>
-            <div className="border border-blue-900/40 bg-[#0d1f3c]/60 px-3 py-2">
-              <div className="text-[9px] font-mono text-blue-400/50 uppercase tracking-widest mb-1">Longitude</div>
+            <div className="border border-border bg-surface/60 px-3 py-2">
+              <div className="text-[9px] font-mono text-fg-muted uppercase tracking-widest mb-1">Longitude</div>
               <div className="text-sm font-mono text-white">{lng.toFixed(6)}°</div>
             </div>
           </div>
@@ -112,20 +112,20 @@ export default function AnalyzePage() {
 
         {/* Form */}
         <div className="space-y-3">
-          <div className="border border-blue-900/40 bg-[#0d1f3c]/60 p-4">
-            <label className="text-[9px] font-mono text-blue-400/60 uppercase tracking-widest block mb-2">
+          <div className="border border-border bg-surface/60 p-4">
+            <label className="text-[9px] font-mono text-fg-muted uppercase tracking-widest block mb-2">
               <MapPin size={9} className="inline mr-1" />Location Name
             </label>
             <input
-              className="w-full bg-transparent border-b border-blue-400/30 text-xs font-mono text-white py-1 outline-none focus:border-blue-400 transition-colors placeholder:text-blue-300/20"
+              className="w-full bg-transparent border-b border-border/80 text-xs font-mono text-white py-1 outline-none focus:border-primary-soft transition-colors placeholder:text-primary-glow/20"
               value={address}
               onChange={e => setAddress(e.target.value)}
               placeholder="e.g. Kariakoo Market junction"
             />
           </div>
 
-          <div className="border border-blue-900/40 bg-[#0d1f3c]/60 p-4">
-            <label className="text-[9px] font-mono text-blue-400/60 uppercase tracking-widest block mb-3">Road Type</label>
+          <div className="border border-border bg-surface/60 p-4">
+            <label className="text-[9px] font-mono text-fg-muted uppercase tracking-widest block mb-3">Road Type</label>
             <div className="grid grid-cols-2 gap-1.5">
               {ROAD_TYPES.map(rt => (
                 <button
@@ -133,8 +133,8 @@ export default function AnalyzePage() {
                   onClick={() => setRoadType(rt.value)}
                   className={`text-left px-3 py-2 text-[10px] font-mono transition-all ${
                     roadType === rt.value
-                      ? 'bg-blue-600/20 text-blue-300 border border-blue-500/40'
-                      : 'text-blue-300/40 border border-transparent hover:text-blue-200 hover:bg-blue-900/20'
+                      ? 'bg-primary/20 text-primary-glow border border-primary-soft/40'
+                      : 'text-fg-muted border border-transparent hover:text-fg hover:bg-surface/50'
                   }`}
                 >
                   {rt.label}
@@ -143,13 +143,13 @@ export default function AnalyzePage() {
             </div>
           </div>
 
-          <div className="border border-blue-900/40 bg-[#0d1f3c]/60 p-4 space-y-4">
+          <div className="border border-border bg-surface/60 p-4 space-y-4">
             <div>
-              <label className="text-[9px] font-mono text-blue-400/60 uppercase tracking-widest block mb-2">
+              <label className="text-[9px] font-mono text-fg-muted uppercase tracking-widest block mb-2">
                 <Ruler size={9} className="inline mr-1" />Billboard Size
               </label>
               <select
-                className="w-full bg-[#060f1e] border border-blue-900/40 text-xs font-mono text-white py-2 px-2 outline-none focus:border-blue-400 transition-colors"
+                className="w-full bg-[#060f1e] border border-border text-xs font-mono text-white py-2 px-2 outline-none focus:border-primary-soft transition-colors"
                 value={size}
                 onChange={e => setSize(e.target.value)}
               >
@@ -158,19 +158,19 @@ export default function AnalyzePage() {
             </div>
 
             <div>
-              <label className="text-[9px] font-mono text-blue-400/60 uppercase tracking-widest block mb-2">
+              <label className="text-[9px] font-mono text-fg-muted uppercase tracking-widest block mb-2">
                 <ArrowUp size={9} className="inline mr-1" />Height from ground (m)
               </label>
               <input
                 type="number" min="2" max="30"
-                className="w-full bg-[#060f1e] border border-blue-900/40 text-xs font-mono text-white py-2 px-2 outline-none focus:border-blue-400 transition-colors"
+                className="w-full bg-[#060f1e] border border-border text-xs font-mono text-white py-2 px-2 outline-none focus:border-primary-soft transition-colors"
                 value={height}
                 onChange={e => setHeight(e.target.value)}
               />
             </div>
 
             <div>
-              <label className="text-[9px] font-mono text-blue-400/60 uppercase tracking-widest block mb-2">
+              <label className="text-[9px] font-mono text-fg-muted uppercase tracking-widest block mb-2">
                 <Compass size={9} className="inline mr-1" />Facing Angle
               </label>
               <div className="grid grid-cols-2 gap-1.5">
@@ -180,8 +180,8 @@ export default function AnalyzePage() {
                     onClick={() => setAngle(a)}
                     className={`py-1.5 text-[10px] font-mono transition-all capitalize ${
                       angle === a
-                        ? 'bg-blue-600/20 text-blue-300 border border-blue-500/40'
-                        : 'text-blue-300/30 border border-blue-900/30 hover:text-blue-200'
+                        ? 'bg-primary/20 text-primary-glow border border-primary-soft/40'
+                        : 'text-fg-dim border border-border/60 hover:text-fg'
                     }`}
                   >
                     {a.replace('-', ' ')}
@@ -200,7 +200,7 @@ export default function AnalyzePage() {
           <button
             onClick={handleAnalyze}
             disabled={isAnalyzing}
-            className="w-full py-3 bg-blue-600 text-white font-mono text-xs hover:bg-blue-500 transition-all border border-blue-400/40 flex items-center justify-center gap-2 disabled:opacity-70"
+            className="w-full py-3 bg-primary text-white font-mono text-xs hover:bg-primary transition-all border border-primary-soft/50 flex items-center justify-center gap-2 disabled:opacity-70"
           >
             {isAnalyzing ? (
               <><div className="w-3 h-3 border border-white/40 border-t-white rounded-full animate-spin" />ANALYZING…</>

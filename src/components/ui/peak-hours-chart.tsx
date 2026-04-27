@@ -16,8 +16,8 @@ interface HourEntry { hour: string; vehicles: number }
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload?.length) {
     return (
-      <div className="bg-[#0d1f3c] border border-blue-400/30 px-3 py-2 text-xs font-mono">
-        <p className="text-blue-300">{label}:00</p>
+      <div className="bg-surface border border-border/80 px-3 py-2 text-xs font-mono">
+        <p className="text-primary-glow">{label}:00</p>
         <p className="text-white">{payload[0].value.toLocaleString()} vehicles</p>
       </div>
     );
