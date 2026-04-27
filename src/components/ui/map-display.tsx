@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import 'leaflet/dist/leaflet.css';
 
 interface MapDisplayProps {
   lat: number;
@@ -29,7 +30,6 @@ export function MapDisplay({
 
     (async () => {
       L = (await import('leaflet')).default;
-      await import('leaflet/dist/leaflet.css');
 
       // Fix default icon path issue in Next.js
       delete (L.Icon.Default.prototype as any)._getIconUrl;
