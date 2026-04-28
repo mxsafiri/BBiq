@@ -216,6 +216,88 @@ export async function getAnalyses(): Promise<AnalysisSummary[]> {
   }));
 }
 
+export interface LiveTrafficRow {
+  locationId: string;
+  locationName: string;
+  address: string;
+  congestionLevel: number;
+  avgSpeedKph: number;
+  source: string;
+  recordedAt: string;
+}
+
+export async function getLiveTraffic(): Promise<LiveTrafficRow[]> {
+  const sql = getDb();
+  const rows = await sql`
+    SELECT DISTINCT ON (l.id)
+      l.id            AS location_id,
+      l.name          AS location_name,
+      l.address,
+      ts.congestion_level,
+      ts.avg_speed_kph,
+      ts.source,
+      ts.recorded_at
+    FROM traffic_snapshots ts
+    JOIN locations l ON l.id = ts.location_id
+    ORDER BY l.id, ts.recorded_at DESC
+  `;
+  return rows.map(r => ({
+    locationId:      r.location_id,
+    locationName:    r.location_name,
+    address:         r.address,
+    congestionLevel: parseFloat(r.congestion_level),
+    avgSpeedKph:     parseFloat(r.avg_speed_kph),
+    source:          r.source,
+    recordedAt:      r.recorded_at,
+  }));
+}
+
+export interface AnalyticsSummary {
+  totalAnalyses:      number;
+  totalLocations:     number;
+  avgCompositeScore:  number;
+  totalImpressions:   number;
+  totalRevenuePotential: number;
+  scoreDistribution:  { grade: string; count: number }[];
+  topCategories:      { category: string; count: number }[];
+}
+
+export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
+  const sql = getDb();
+  const [base] = await sql`
+    SELECT
+      COUNT(a.id)::int                          AS total_analyses,
+      COUNT(DISTINCT b.location_id)::int        AS total_locations,
+      COALESCE(AVG(a.composite_score), 0)       AS avg_composite,
+      COALESCE(SUM(a.monthly_impressions), 0)::bigint AS total_impressions,
+      COALESCE(SUM(a.suggested_price_tzs), 0)::bigint AS total_revenue
+    FROM analyses a
+    JOIN billboards b ON b.id = a.billboard_id
+  `;
+  const grades = await sql`
+    SELECT score_grade AS grade, COUNT(*)::int AS count
+    FROM analyses
+    GROUP BY score_grade
+    ORDER BY count DESC
+  `;
+  const cats = await sql`
+    SELECT category, COUNT(*)::int AS count
+    FROM nearby_places
+    GROUP BY category
+    ORDER BY count DESC
+    LIMIT 5
+  `;
+  return {
+    totalAnalyses:         base.total_analyses,
+    totalLocations:        base.total_locations,
+    avgCompositeScore:     parseFloat(base.avg_composite),
+    totalImpressions:      Number(base.total_impressions),
+    totalRevenuePotential: Number(base.total_revenue),
+    scoreDistribution:     grades.map(g => ({ grade: g.grade, count: g.count })),
+    topCategories:         cats.map(c => ({ category: c.category, count: c.count })),
+  };
+}
+
 export async function getAnalysisById(id: string): Promise<AnalysisDetail | null> {
   const sql = getDb();
   const rows = await sql`
