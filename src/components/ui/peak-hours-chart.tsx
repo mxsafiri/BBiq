@@ -16,7 +16,7 @@ interface HourEntry { hour: string; vehicles: number }
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload?.length) {
     return (
-      <div className="bg-surface border border-border/80 px-3 py-2 text-xs font-mono">
+      <div className="bg-surface border border-border px-3 py-2 text-xs font-mono shadow-lg">
         <p className="text-primary-glow">{label}:00</p>
         <p className="text-white">{payload[0].value.toLocaleString()} vehicles</p>
       </div>
@@ -30,25 +30,54 @@ export function PeakHoursChart({ data }: { data?: HourEntry[] }) {
   const maxVehicles = Math.max(...chartData.map(d => d.vehicles));
 
   return (
-    <ResponsiveContainer width="100%" height={120}>
-      <BarChart data={chartData} barCategoryGap="20%">
+    <ResponsiveContainer width="100%" height={180}>
+      <BarChart data={chartData} barCategoryGap="18%">
+        <defs>
+          <linearGradient id="barGradPeak" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stopColor="#93C5FD" stopOpacity={1}   />
+            <stop offset="100%" stopColor="#3B82F6" stopOpacity={0.85}/>
+          </linearGradient>
+          <linearGradient id="barGradMid" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stopColor="#60A5FA" stopOpacity={0.85}/>
+            <stop offset="100%" stopColor="#3B82F6" stopOpacity={0.55}/>
+          </linearGradient>
+          <linearGradient id="barGradLow" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stopColor="#3B82F6" stopOpacity={0.45}/>
+            <stop offset="100%" stopColor="#1F3B66" stopOpacity={0.35}/>
+          </linearGradient>
+          <filter id="barGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="2" result="b" />
+            <feMerge>
+              <feMergeNode in="b" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
         <XAxis
           dataKey="hour"
-          tick={{ fill: 'rgba(147,197,253,0.5)', fontSize: 9, fontFamily: 'monospace' }}
+          tick={{ fill: 'rgba(148,163,184,0.6)', fontSize: 9, fontFamily: 'monospace' }}
           axisLine={false}
           tickLine={false}
           interval={3}
         />
-        <YAxis hide />
-        <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(59,130,246,0.08)' }} />
-        <Bar dataKey="vehicles" radius={[2, 2, 0, 0]}>
+        <YAxis
+          tick={{ fill: 'rgba(148,163,184,0.45)', fontSize: 9, fontFamily: 'monospace' }}
+          axisLine={false}
+          tickLine={false}
+          width={28}
+        />
+        <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(59,130,246,0.06)' }} />
+        <Bar dataKey="vehicles" radius={[3, 3, 0, 0]}>
           {chartData.map((entry, i) => {
             const intensity = entry.vehicles / maxVehicles;
-            const isPeak = intensity > 0.7;
+            const fill = intensity > 0.75 ? 'url(#barGradPeak)' :
+                         intensity > 0.4  ? 'url(#barGradMid)'  :
+                                            'url(#barGradLow)';
             return (
               <Cell
                 key={i}
-                fill={isPeak ? '#3b82f6' : `rgba(59,130,246,${0.2 + intensity * 0.5})`}
+                fill={fill}
+                filter={intensity > 0.75 ? 'url(#barGlow)' : undefined}
               />
             );
           })}
