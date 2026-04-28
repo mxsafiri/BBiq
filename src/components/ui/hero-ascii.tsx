@@ -13,7 +13,7 @@ export default function HeroAscii() {
         playsInline
         preload="auto"
         poster=""
-        className="absolute inset-0 w-full h-full object-cover z-0"
+        className="absolute inset-0 w-full h-full object-cover z-0 grayscale"
       >
         <source src="/hero-bg.mp4" type="video/mp4" />
       </video>
