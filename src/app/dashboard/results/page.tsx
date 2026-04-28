@@ -274,7 +274,10 @@ function ResultsContent() {
         <BottomKPI icon={TrendingUp} label="Avg. Daily Impressions"   value={a.dailyImpressions.toLocaleString()}   sub="/day" />
         <BottomKPI icon={Calendar}   label="Peak Day"                 value="Saturday" />
         <BottomKPI icon={Clock}      label="Best Time"                value="5PM – 7PM" />
-        <button className="md:ml-auto md:w-auto col-span-2 md:col-span-1 w-full flex items-center justify-center gap-2 px-5 py-2.5 bg-primary text-white font-mono text-xs font-bold hover:bg-primary-soft transition-colors border border-primary-soft/40">
+        <button
+          onClick={() => window.open(`/report/${id}`, '_blank')}
+          className="md:ml-auto md:w-auto col-span-2 md:col-span-1 w-full flex items-center justify-center gap-2 px-5 py-2.5 bg-primary text-white font-mono text-xs font-bold hover:bg-primary/80 active:scale-[0.98] transition-all border border-primary-soft/40"
+        >
           <FileDown size={12} /> EXPORT PDF REPORT
         </button>
       </div>

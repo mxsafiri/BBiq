@@ -35,6 +35,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ id: analysisId }, { status: 201 });
   } catch (err) {
     console.error('[POST /api/analyses]', err);
-    return NextResponse.json({ error: 'Failed to create analysis' }, { status: 500 });
+    const detail = err instanceof Error ? err.message : 'Unknown error';
+    return NextResponse.json({ error: 'Failed to create analysis', detail }, { status: 500 });
   }
 }
