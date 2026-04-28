@@ -18,9 +18,6 @@ export default function HeroAscii() {
         <source src="/hero-bg.mp4" type="video/mp4" />
       </video>
 
-      {/* Soft top/bottom fade + vignette only, no left tint */}
-      <div className="absolute inset-0 z-[1] pointer-events-none bg-gradient-to-t from-[#0B1E36] via-transparent to-[#0B1E36]/40" />
-      <div className="absolute inset-0 z-[1] pointer-events-none vignette" />
 
       {/* Top header */}
       <div className="absolute top-0 left-0 right-0 z-20 border-b border-border/80">
