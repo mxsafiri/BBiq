@@ -5,6 +5,7 @@ export const authConfig = {
     signIn: '/login',
     error: '/login',
   },
+  session: { strategy: 'jwt' },
   providers: [],
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
