@@ -1,6 +1,6 @@
 import { getDb } from './client';
 import { score, type RoadType } from '@/lib/scoring';
-import { NEARBY_PLACES, PEAK_HOURS } from '@/lib/mock-data';
+import { PEAK_HOURS } from '@/lib/mock-data';
 import { fetchTrafficData } from '@/lib/google-traffic';
 import { fetchNearbyPlaces } from '@/lib/foursquare-places';
 
@@ -101,14 +101,15 @@ export async function createAnalysis(input: CreateAnalysisInput) {
   `;
   const billboardId: string = bbRows[0].id;
 
-  // 3. Fetch real traffic + places (falls back to mock when no API key)
+  // 3. Fetch real traffic + places
   const [trafficData, realPlaces] = await Promise.all([
     fetchTrafficData(lat, lng, roadType),
     fetchNearbyPlaces(lat, lng),
   ]);
 
-  const placesToUse   = realPlaces.length > 0 ? realPlaces : NEARBY_PLACES;
-  const avgCatWeight  = placesToUse.reduce((s, p) => s + p.weight, 0) / placesToUse.length;
+  const avgCatWeight = realPlaces.length > 0
+    ? realPlaces.reduce((s, p) => s + p.weight, 0) / realPlaces.length
+    : 0.65;
 
   // 4. Compute scores
   const heightFactor = Math.min(1, 0.4 + (heightM / 20) * 0.6);
@@ -119,7 +120,7 @@ export async function createAnalysis(input: CreateAnalysisInput) {
     congestionLevel:   trafficData.congestionLevel,
     roadType,
     avgSpeedKph:       trafficData.avgSpeedKph,
-    nearbyPlacesCount: placesToUse.length,
+    nearbyPlacesCount: realPlaces.length,
     categoryWeight:    avgCatWeight,
     visibilityFactor,
   });
@@ -158,8 +159,8 @@ export async function createAnalysis(input: CreateAnalysisInput) {
     )
   `;
 
-  // 6. Save nearby places (real or mock)
-  for (const place of placesToUse) {
+  // 6. Save real nearby places (skip if none returned)
+  for (const place of realPlaces) {
     await sql`
       INSERT INTO nearby_places (location_id, name, category, category_weight, distance_m, source)
       VALUES (
@@ -168,7 +169,7 @@ export async function createAnalysis(input: CreateAnalysisInput) {
         ${place.category},
         ${place.weight},
         ${parseInt(place.distance)},
-        ${realPlaces.length > 0 ? 'google' : 'mock'}
+        'overpass'
       )
       ON CONFLICT DO NOTHING
     `;

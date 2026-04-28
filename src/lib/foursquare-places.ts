@@ -75,8 +75,12 @@ export async function fetchNearbyPlaces(
   try {
     const res = await fetch('https://overpass-api.de/api/interpreter', {
       method:  'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body:    `data=${encodeURIComponent(query)}`,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept':       'application/json',
+        'User-Agent':   'BillboardIQ/1.0 (contact: admin@billboardiq.com)',
+      },
+      body: `data=${encodeURIComponent(query)}`,
     });
 
     if (!res.ok) throw new Error(`Overpass ${res.status}`);
