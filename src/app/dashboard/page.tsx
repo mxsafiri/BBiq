@@ -3,7 +3,10 @@ import { ArrowRight, TrendingUp, Eye, DollarSign, MapPin } from 'lucide-react';
 import { getAnalyses } from '@/db/queries';
 
 function fmtPrice(n: number) {
-  return n >= 1_000_000 ? `TZS ${(n / 1_000_000).toFixed(1)}M` : `TZS ${(n / 1_000).toFixed(0)}K`;
+  if (!isFinite(n) || n <= 0) return '—';
+  if (n >= 1_000_000_000) return `TZS ${(n / 1_000_000_000).toFixed(1)}B`;
+  if (n >= 1_000_000)     return `TZS ${(n / 1_000_000).toFixed(1)}M`;
+  return `TZS ${(n / 1_000).toFixed(0)}K`;
 }
 
 function fmtDate(iso: string) {
@@ -17,7 +20,9 @@ export default async function DashboardPage() {
   const avgImpressions = analyses.length
     ? Math.round(analyses.reduce((s, a) => s + a.dailyImpressions, 0) / analyses.length)
     : 0;
-  const totalRevenuePotential = analyses.reduce((s, a) => s + a.suggestedPriceTzs, 0);
+  const totalRevenuePotential = analyses
+    .filter(a => isFinite(a.suggestedPriceTzs) && a.suggestedPriceTzs < 500_000_000)
+    .reduce((s, a) => s + a.suggestedPriceTzs, 0);
   const premiumCount = analyses.filter(a => a.scoreGrade === 'PREMIUM' || a.scoreGrade === 'HIGH').length;
   const marketCoverage = analyses.length ? Math.round((premiumCount / analyses.length) * 100) : 0;
 

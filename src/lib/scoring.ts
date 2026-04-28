@@ -63,16 +63,18 @@ export function score(input: ScoringInput): ScoringResult {
   // Avg exposure = 1000 / avg_speed_kph * 3.6 seconds (billboard ~100m visible zone)
   const exposureTimeSeconds = avgSpeedKph > 0 ? Math.round((100 / (avgSpeedKph / 3.6))) : 30;
 
+  const safe = (n: number, max: number) => (isFinite(n) && n >= 0 ? Math.min(n, max) : 0);
+
   return {
-    trafficScore: Math.min(1, trafficScore),
-    footScore: Math.min(1, footScore),
-    compositeScore: Math.min(1, compositeScore),
-    dailyImpressions,
-    weeklyImpressions,
-    monthlyImpressions,
-    suggestedPriceMonthlyTZS,
-    priceRangeLow,
-    priceRangeHigh,
-    exposureTimeSeconds,
+    trafficScore:             Math.min(1, trafficScore),
+    footScore:                Math.min(1, footScore),
+    compositeScore:           Math.min(1, compositeScore),
+    dailyImpressions:         safe(dailyImpressions,         500_000),
+    weeklyImpressions:        safe(weeklyImpressions,      3_500_000),
+    monthlyImpressions:       safe(monthlyImpressions,    15_000_000),
+    suggestedPriceMonthlyTZS: safe(suggestedPriceMonthlyTZS, 100_000_000),
+    priceRangeLow:            safe(priceRangeLow,            75_000_000),
+    priceRangeHigh:           safe(priceRangeHigh,          135_000_000),
+    exposureTimeSeconds:      safe(exposureTimeSeconds,           300),
   };
 }
