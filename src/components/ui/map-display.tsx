@@ -56,23 +56,23 @@ export function MapDisplay({
         maxZoom: 19,
       }).addTo(map);
 
-      // Custom blue marker
-      const blueIcon = L.divIcon({
+      // Custom brand-red marker
+      const markerIcon = L.divIcon({
         className: '',
         html: `
           <div style="
             width:20px;height:20px;
-            background:#3b82f6;
+            background:#e31837;
             border:3px solid #fff;
             border-radius:50%;
-            box-shadow:0 0 12px rgba(59,130,246,0.8);
+            box-shadow:0 0 12px rgba(227,24,55,0.8);
           "></div>
         `,
         iconSize: [20, 20],
         iconAnchor: [10, 10],
       });
 
-      markerRef.current = L.marker([lat, lng], { icon: blueIcon }).addTo(map);
+      markerRef.current = L.marker([lat, lng], { icon: markerIcon }).addTo(map);
 
       if (interactive && onLocationChange) {
         map.on('click', (e: any) => {

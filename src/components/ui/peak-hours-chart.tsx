@@ -34,16 +34,16 @@ export function PeakHoursChart({ data }: { data?: HourEntry[] }) {
       <BarChart data={chartData} barCategoryGap="18%">
         <defs>
           <linearGradient id="barGradPeak" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%"   stopColor="#93C5FD" stopOpacity={1}   />
-            <stop offset="100%" stopColor="#3B82F6" stopOpacity={0.85}/>
+            <stop offset="0%"   stopColor="#ff8fa0" stopOpacity={1}   />
+            <stop offset="100%" stopColor="#e31837" stopOpacity={0.85}/>
           </linearGradient>
           <linearGradient id="barGradMid" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%"   stopColor="#60A5FA" stopOpacity={0.85}/>
-            <stop offset="100%" stopColor="#3B82F6" stopOpacity={0.55}/>
+            <stop offset="0%"   stopColor="#ff4d6a" stopOpacity={0.85}/>
+            <stop offset="100%" stopColor="#e31837" stopOpacity={0.55}/>
           </linearGradient>
           <linearGradient id="barGradLow" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%"   stopColor="#3B82F6" stopOpacity={0.45}/>
-            <stop offset="100%" stopColor="#1F3B66" stopOpacity={0.35}/>
+            <stop offset="0%"   stopColor="#e31837" stopOpacity={0.4}/>
+            <stop offset="100%" stopColor="#2a2a2a" stopOpacity={0.35}/>
           </linearGradient>
           <filter id="barGlow" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="2" result="b" />
@@ -66,7 +66,7 @@ export function PeakHoursChart({ data }: { data?: HourEntry[] }) {
           tickLine={false}
           width={28}
         />
-        <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(59,130,246,0.06)' }} />
+        <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(227,24,55,0.06)' }} />
         <Bar dataKey="vehicles" radius={[3, 3, 0, 0]}>
           {chartData.map((entry, i) => {
             const intensity = entry.vehicles / maxVehicles;

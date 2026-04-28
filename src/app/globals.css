@@ -1,29 +1,29 @@
 @import "tailwindcss";
 
 :root {
-  /* Surfaces */
-  --background:    #0B1E36;
-  --surface:       #102A4C;
-  --surface-2:     #163566;
-  --border:        #1F3B66;
-  --border-soft:   rgba(31, 59, 102, 0.5);
+  /* Surfaces — Vercel/Linear-style monochrome black */
+  --background:    #0a0a0a;
+  --surface:       #171717;
+  --surface-2:     #262626;
+  --border:        #2a2a2a;
+  --border-soft:   rgba(42, 42, 42, 0.6);
 
-  /* Brand */
-  --primary:       #3B82F6;
-  --primary-soft:  #60A5FA;
-  --primary-glow:  #93C5FD;
+  /* Brand — kalax red */
+  --primary:       #e31837;
+  --primary-soft:  #ff4d6a;
+  --primary-glow:  #ff8fa0;
 
   /* Accents */
-  --gold:          #F4A261;
-  --gold-soft:     #F7B267;
+  --gold:          #f99c00;
+  --gold-soft:     #fcbb00;
 
   /* Status */
-  --success:       #2A9D8F;
+  --success:       #25D366;
 
   /* Text */
-  --fg:        #E5E7EB;
-  --fg-muted:  #94A3B8;
-  --fg-dim:    #64748B;
+  --fg:        #fafafa;
+  --fg-muted:  #a1a1a1;
+  --fg-dim:    #525252;
 
   --radius: 0.5rem;
 }
@@ -64,16 +64,16 @@ body {
   font-family: inherit !important;
 }
 .leaflet-tile-pane {
-  filter: brightness(0.55) saturate(0.7) hue-rotate(200deg);
+  filter: brightness(0.5) saturate(0.6);
 }
 .leaflet-control-attribution {
-  background: rgba(11, 30, 54, 0.85) !important;
+  background: rgba(10, 10, 10, 0.85) !important;
   color: var(--fg-dim) !important;
   font-size: 9px !important;
 }
 .leaflet-control-zoom a {
   background: var(--surface) !important;
-  color: var(--primary-soft) !important;
+  color: var(--fg) !important;
   border-color: var(--border) !important;
 }
 
@@ -81,4 +81,4 @@ body {
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--background); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: var(--primary-soft); }
+::-webkit-scrollbar-thumb:hover { background: var(--primary); }

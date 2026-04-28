@@ -13,7 +13,7 @@ export function ScoreRing({ score, label, size = 80 }: ScoreRingProps) {
   const pct = Math.round(score * 100);
 
   const color =
-    pct >= 75 ? '#3b82f6' : pct >= 50 ? '#60a5fa' : pct >= 30 ? '#93c5fd' : '#1e40af';
+    pct >= 75 ? '#e31837' : pct >= 50 ? '#ff4d6a' : pct >= 30 ? '#ff8fa0' : '#525252';
 
   return (
     <div className="flex flex-col items-center gap-1">
@@ -23,7 +23,7 @@ export function ScoreRing({ score, label, size = 80 }: ScoreRingProps) {
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="rgba(59,130,246,0.15)"
+          stroke="rgba(227,24,55,0.15)"
           strokeWidth={6}
         />
         <circle
